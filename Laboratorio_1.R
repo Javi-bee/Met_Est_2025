@@ -57,4 +57,4 @@ barplot(gastos_ord, main = "Gastos mensuales",
         names.arg = c("Otros", "Comestibles",
         "Alquiler", "Gimnasio",
         "Celular", "Transporte"))
-help(barplot)
+
