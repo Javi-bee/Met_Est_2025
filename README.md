@@ -14,7 +14,7 @@ Repositorio del curso de Métodos estadísticos Agosto 2025 del programa de Inge
   + Bases para un uso eficiente en R
   + Modificación de Readme
 
-**13/08/2025: :rage2: Introducción y primer laboratorio del curso**
+**13/08/2025: :rage2: Introducción a R y primer laboratorio del curso**
   + Ejercicios y operaciones básicas (sumas, multiplicaciones, Log, raíz)
   + Uso del ambiente de R para registrar datos
   + Uso de herramientas dentro de R (como el comando help, o los comentarios)
