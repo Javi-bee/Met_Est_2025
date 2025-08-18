@@ -21,9 +21,9 @@ Repositorio del curso de Métodos estadísticos Agosto 2025 del programa de Inge
   + :star: Primera tabla de R
   
 **14/08/2025: Segundo laboratorio del curso con datos proporcionados en clase**
-  + Utilizar datos en formato CSV, asi como pasar hojas de excel a dicho formato
+  + Utilizar datos en formato CSV, asi como pasar hojas de excel a dicho formato :bangbang:
   + Comandos simpes para analizar estructura de datos (head, dim, names, str)
   + Modificación de datos para evitar errores
   + Creación y modificación de objetos (columnas y filas)
-  + Editar tabla en R (main, ylab, col, names)
+  + :muscle: Editar tabla en R (main, ylab, col, names)
   
