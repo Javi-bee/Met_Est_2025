@@ -3,7 +3,7 @@
 
 Repositorio del curso de Métodos estadísticos Agosto 2025 del programa de Ingeniería Forestal.
 
-## Contenido
+## :seedling: Contenido :seedling:
 
 **06/08/2025: Inicio de curso de métodos estadísticos.** 
   + Preparar mi área de trabajo
