@@ -1,10 +1,10 @@
 # Laboratorio semana 3
 # 20/08/2025
+# Correr (si no se tienen descargados) los paquetes dentro de la consola y hacer
+## Library() dentro de mi espacio de trabajo (script)
 
-install.packages("readr")
 library(readr)
 
-install.packages("repmis")
 library(repmis)
 
 # Importar datos ----------------------------------------------------------
@@ -21,8 +21,8 @@ alumno <- seq(1,18,1)
 info <- data.frame(alumno, edad)
 
 info$Altura <- c(174, 174, 170, 160, 158, 155, 188,
-                170, 175, 170, 172, 170, 174, 180,
-                158, 161, 188, 164)
+                 170, 175, 170, 172, 170, 174, 180,
+                 158, 161, 188, 164)
 
 
 # Graficar datos ----------------------------------------------------------
@@ -36,9 +36,6 @@ colors()
 
 colores = c("indianred", "navajowhite", "skyblue")
 
-boxplot(datos_meses,
-        col = colores)
-
 url <- "https://repodatos.atdt.gob.mx/api_update/senasica/actividades_inspeccion_movilizacion/29_actividades-inspeccion-movilizacion.csv"
 
 inspeccion <- read.csv(url)
@@ -46,8 +43,8 @@ inspeccion <- read.csv(url)
 head(inspeccion)
 
 prof_url_2 <- paste0("https://repodatos.atdt.gob.mx/api_update/senasica/",
-                       "actividades_inspeccion_movilizacion/",
-                       "29_actividades-inspeccion-movilizacion.csv")
+                     "actividades_inspeccion_movilizacion/",
+                     "29_actividades-inspeccion-movilizacion.csv")
 
 senasica <- read.csv(prof_url_2)
 
