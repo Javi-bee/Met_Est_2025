@@ -116,3 +116,5 @@ feeds
 
 barplot(feeds)
 barplot(feeds[order(feeds, decreasing = TRUE)])
+
+library(tinytex)
