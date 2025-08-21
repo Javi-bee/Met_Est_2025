@@ -29,11 +29,7 @@ boxplot(info$Altura,
         main = "Clase 3 semestre")  
 colors()
 
-"indianred"
-"navajowhite"
-"skyblue"
-
-colores = c("cornflowerblue", "mediumspringgreen", "tomato")
+colores = c("indianred", "navajowhite", "skyblue")
 
 boxplot(datos_meses,
         col = colores)
