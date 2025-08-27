@@ -157,4 +157,5 @@ barplot(feeds[order(feeds, decreasing = TRUE)],
 )  
 
 help("barplot")
+
 library(tinytex)
