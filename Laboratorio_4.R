@@ -26,6 +26,9 @@ boxplot(calidad$IE ~ calidad$Tratamiento,
 tapply(calidad$IE, calidad$Tratamiento, mean)         # Medias para el indice de desvertes para el grupo control y el experimental
 tapply(calidad$IE, calidad$Tratamiento, var)          # Varianza para el grupo de variacion y control
 
-# En este caso, como una de las varianzas es mas grande que la otra (3 veces mas), esto podria conllevar problemas
-# a la hora de realizar las pruebas de varianzas
+# Observamos que la varianza del grupo fert es 3 veces
+# mas grande que el grupo control (Ctrl)
+library(ggplot2)
 
+ggplot(calidad, aes(x = IE, color = Tratamiento))+    # Como se distribuyen los datos en una grafica de densidad
+  geom_density()
