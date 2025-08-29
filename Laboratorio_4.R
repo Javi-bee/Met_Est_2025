@@ -43,6 +43,7 @@ par(mfrow = c(2,2))                                  # par(mfrow) dos columnas d
 qqnorm(df_ctrl$IE); qqline(df_ctrl$IE)               # Normalidad de ctrl
 qqnorm(df_fert$IE); qqline(df_fert$IE)               # Normalidad de fert
 par(mfrow = c(1,1))                                  # c(1,1) una columna con una sola grafica
+# Datos normales en ambas graficas
 
 # Prueba de normalidad
 
