@@ -31,7 +31,7 @@ tapply(calidad$IE, calidad$Tratamiento, sd)          # Desviacion media para amb
 # mas grande que el grupo control (Ctrl)
 library(ggplot2)
 
-ggplot(calidad, aes(x = IE, color = Tratamiento))+   # Como se distribuyen los datos en una grafica de densidad
+ggplot(calidad, aes(x = IE, color = Tratamiento))+   # dist. datos en una grafica de densidad
   geom_density()
 
 df_ctrl <- subset(calidad, Tratamiento == "Ctrl")    # == Igual a 
@@ -39,10 +39,10 @@ df_fert <- subset(calidad, Tratamiento != "Ctrl")    # != Diferente a
 
 # qqnorm realizar normalidad
 
-par(mfrow = c(2,2))                                  # par(mfrow) Fila con dos columnas de graficas
+par(mfrow = c(2,2))                                  # par(mfrow) dos columnas de graficas
 qqnorm(df_ctrl$IE); qqline(df_ctrl$IE)               # Normalidad de ctrl
 qqnorm(df_fert$IE); qqline(df_fert$IE)               # Normalidad de fert
-par(mfrow = c(1,1))                                  # c(1,1) para volver a una columna con una sola grafica
+par(mfrow = c(1,1))                                  # c(1,1) una columna con una sola grafica
 
 # Prueba de normalidad
 
