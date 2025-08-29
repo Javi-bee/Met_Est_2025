@@ -1,4 +1,7 @@
+# Laboratorio 1
 # Práctica: gastos de estudiante universitaria
+# JEGR
+# 13/08/2025
 
 ## Gastos totales por mes
 300 + 240 + 1527 + 400 + 1500 + 1833

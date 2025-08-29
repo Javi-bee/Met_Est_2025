@@ -1,3 +1,7 @@
+# Laboratorio 2
+# JEGR
+# 14/08/2025
+
 temperatura <- read.csv("C:/Repositorio_GIT/Met_Est_2025/temperatura.csv")
 View(temperatura)
 
