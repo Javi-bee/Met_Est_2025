@@ -46,17 +46,26 @@ help.search("absolute")
 
 #**Ejercicio de autoevaluación**
 
+# Agrupar todos los datos de los gastos
 gastos <- c(Celular, Transporte, Comestibles,
             Gimnasio, Otros, Alquiler)
 gastos
 
-barplot(gastos)
+# Grafico de barras
+barplot(gastos, col = "tomato")
 
 help(sort)
 gastos_ord <- sort(gastos, decreasing = TRUE)
 gastos_ord
-barplot(gastos_ord)
+
+# Graficos de los gastos mensuales 
+
+# Sin nombres en el eje x
+barplot(gastos_ord, col = "navajowhite")
+
+#Nombres en el eje x
 barplot(gastos_ord, main = "Gastos mensuales",
+        col = "cornflowerblue",
         names.arg = c("Otros", "Comestibles",
         "Alquiler", "Gimnasio",
         "Celular", "Transporte"))
