@@ -82,7 +82,7 @@ qqnorm(df_virginica$petal_length); qqline(df_virginica$petal_length)
 # Prueba de normalidad
 shapiro.test(df_versicolor$petal_length)
 shapiro.test(df_virginica$petal_length)
-# Mayor a 0.05 (p-value = 0.1585), por lo que hay una diferencia significativa entre ambas variables
+# Mayor a 0.05 (p-value = 0.1585), por lo que existe normalidad en variables
 
 # Homogeneidad de varianzas
 var.test(df_versicolor$petal_length, df_virginica$petal_length)
