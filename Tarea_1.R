@@ -93,7 +93,7 @@ t.test(df_versicolor$petal_length, df_virginica$petal_length,
        alternative = "two.sided",
        var.equal = T)
 # p-value < 2.2e-16, menor a 0.05, por lo que se rechaza H0, hay una gran diferencia
-# En tamaño de petalos
+# en tamaño de petalos
 
 # Prueba de cohen´s d
 cohens_efecto <- function(x,y) {
@@ -105,3 +105,7 @@ cohens_efecto <- function(x,y) {
 
 d_cal <- (cohens_efecto(df_versicolor$petal_length, df_virginica$petal_length))
 d_cal
+
+# Grafico de violin
+ggplot(iris_sp, aes(x = species, y = petal_length))+
+  geom_violin()

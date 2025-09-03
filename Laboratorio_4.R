@@ -79,3 +79,7 @@ cohens_efecto <- function(x,y) {
  
 d_cal <- cohens_efecto(df_ctrl$IE, df_fert$IE)
 d_cal
+
+# Grafico de violin para compara diferencias entre ambas variables
+ggplot(calidad, aes(x = IE, y = Tratamiento))+
+  geom_violin()
