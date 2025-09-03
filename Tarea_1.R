@@ -3,6 +3,7 @@
 # Base de datos Iris
 
 library("ggplot2")
+library("dplyr")
 
 # Base de datos
 data("iris")
@@ -66,4 +67,33 @@ ggplot(iris_sp, aes(x = petal_length, color = species,))+
 df_versicolor <- subset(iris_sp, species  == "versicolor")
 df_virginica <- subset(iris_sp, species != "versicolor")
 
+# Hipotesis ---------------------------------------------------------------
 
+# ¿Existe una diferencia significante entre el largo del petalo de ambas especies?
+
+# Grafico de normalidad para ambas especies
+qqnorm(df_versicolor$petal_length); qqline(df_versicolor$petal_length)
+qqnorm(df_virginica$petal_length); qqline(df_virginica$petal_length)
+
+# Prueba de normalidad
+shapiro.test(df_versicolor$petal_length)
+shapiro.test(df_virginica$petal_length)
+
+# Homogeneidad de varianzas
+var.test(df_versicolor$petal_length, df_virginica$petal_length)
+
+# Prueba de t
+t.test(df_versicolor$petal_length, df_virginica$petal_length,
+       alternative = "two.sided",
+       var.equal = T)
+
+# Prueba de cohen´s d
+cohens_efecto <- function(x,y) {
+  n1 <- length(x); n2 <- length(y)
+  s1 <- sd(x); s2 <- sd(y)
+  sp <- sqrt(((n1-1) * s1^2 + (n2 - 1) * s2^2) / (n1 + n2 -2))
+  (mean(x) - mean(y)) / sp
+}
+
+d_cal <- (cohens_efecto(df_versicolor$petal_length, df_virginica$petal_length))
+d_cal
