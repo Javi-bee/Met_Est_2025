@@ -105,6 +105,8 @@ cohens_efecto <- function(x,y) {
 
 d_cal <- (cohens_efecto(df_versicolor$petal_length, df_virginica$petal_length))
 d_cal
+# Valor que representa la diferencia entre las medias de ambas variables 
+# Mientras mas grande, mayor diferencia habra entre sus medias y datos
 
 # Grafico de violin
 ggplot(iris_sp, aes(x = species, y = petal_length))+
