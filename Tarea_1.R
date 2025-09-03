@@ -1,5 +1,5 @@
 # 31/08/2025
-#JEGR
+# JEGR
 # Base de datos Iris
 
 library("ggplot2")
@@ -27,10 +27,6 @@ head(iris_df)
 # Grafico boxplot simple
 color <- c("cornflowerblue", "tomato", "navajowhite")
 
-windows(width = 4.5, height = 4) # Hacer la ventana mas ancha que alta
-
-opar <- par(no.readonly = T)  #Guardar los parametros graficos actuales
-
 par(mar = c(5, 5, 4, 6)) # Cambiar margenes de la grafica
 
 boxplot(iris_df$petal_length ~ iris_df$species,
@@ -44,7 +40,6 @@ legend("right",
        fill = color,
        col = color,
        xpd = T)
-on.exit(par(opar))
 
 
 # Estadistica descriptiva -------------------------------------------------
