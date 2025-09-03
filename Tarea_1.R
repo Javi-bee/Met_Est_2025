@@ -4,6 +4,9 @@
 
 library("ggplot2")
 library("dplyr")
+library("hrbrthemes")
+library("viridis")
+
 
 # Base de datos
 data("iris")
@@ -111,3 +114,20 @@ d_cal
 # Grafico de violin
 ggplot(iris_sp, aes(x = species, y = petal_length))+
   geom_violin()
+
+sample_size = iris_sp %>%group_by(species) %>%summarize(num=n())
+
+iris_sp %>%
+  left_join(sample_size) %>%
+  mutate(myaxis = paste0(species, "/n", "n=")) %>%
+  ggplot( aes(x=myaxis, y= petal_length, fill=species))+
+  geom_violin(width=1.4)+
+  geom_boxplot(width=0.1, color="grey", alpha=0.2)+
+  scale_fill_viridis(discrete= T)+
+  theme_ipsum()+
+  theme(
+    legend.position = "none",
+    plot.title = element_text(size=11)
+  )+
+  ggtitle("Grafico de violin sobre boxplot")+
+  xlab("")
