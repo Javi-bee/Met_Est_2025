@@ -126,6 +126,9 @@ iris_sp %>%
   scale_fill_viridis(discrete= T)+
   theme_ipsum()+
   theme(
+    panel.grid = element_line(color = "black",
+                              size = 0.75,
+                              linetype = 2),
     legend.position = "none",
     plot.title = element_text(size=11)
   )+
