@@ -70,22 +70,30 @@ df_virginica <- subset(iris_sp, species != "versicolor")
 # Hipotesis ---------------------------------------------------------------
 
 # ¿Existe una diferencia significante entre el largo del petalo de ambas especies?
+# H0 = no hay diferencia
+# H1 = si hay diferencia
+
 
 # Grafico de normalidad para ambas especies
 qqnorm(df_versicolor$petal_length); qqline(df_versicolor$petal_length)
 qqnorm(df_virginica$petal_length); qqline(df_virginica$petal_length)
+# Ambos tienen datos normales
 
 # Prueba de normalidad
 shapiro.test(df_versicolor$petal_length)
 shapiro.test(df_virginica$petal_length)
+# Mayor a 0.05 (p-value = 0.1585), por lo que hay una diferencia significativa entre ambas variables
 
 # Homogeneidad de varianzas
 var.test(df_versicolor$petal_length, df_virginica$petal_length)
+# p-value = 0.2637, varianzas relativamente similares, se puede utilizar prueba de t
 
 # Prueba de t
 t.test(df_versicolor$petal_length, df_virginica$petal_length,
        alternative = "two.sided",
        var.equal = T)
+# p-value < 2.2e-16, menor a 0.05, por lo que se rechaza H0, hay una gran diferencia
+# En tamaño de petalos
 
 # Prueba de cohen´s d
 cohens_efecto <- function(x,y) {
