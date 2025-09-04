@@ -6,7 +6,8 @@ library("ggplot2")
 library("dplyr")
 library("hrbrthemes")
 library("viridis")
-
+library("gt")
+library("gtExtras")
 
 # Base de datos
 data("iris")
@@ -106,6 +107,14 @@ d_cal
 # Valor que representa la diferencia entre las medias de ambas variables 
 # Mientras mas grande, mayor diferencia habra entre sus medias y datos
 
+# Grafico boxplot simple de ambas especies
+boxplot(df_versicolor$petal_length, df_virginica$petal_length,
+        names = c("Versicolor","Virginica"),
+        col = color,
+        main = "Distribucion del largo del petalo por especie",
+        xlab = "Especie",
+        ylab = "Largo del petalo (cm)")
+
 # Grafico de violin
 ggplot(iris_sp, aes(x = species, y = petal_length))+
   geom_violin()
@@ -114,11 +123,13 @@ sample_size = iris_sp %>%group_by(species) %>%summarize(num=n())
 
 iris_sp %>%
   left_join(sample_size) %>%
-  mutate(myaxis = paste0(species, "/n", "n=")) %>%
+  mutate(myaxis = paste0(species, "", "")) %>%
   ggplot( aes(x=myaxis, y= petal_length, fill=species))+
+  ylab("Longitud del petalo")+
   geom_violin(width=1.4)+
   geom_boxplot(width=0.1, color="grey", alpha=0.2)+
   scale_fill_viridis(discrete= T)+
+  scale_fill_viridis(discrete = T)+
   theme_minimal()+
   theme(
     legend.position = "none",
@@ -126,3 +137,40 @@ iris_sp %>%
   )+
   ggtitle("Grafico de violin sobre boxplot")+
   xlab("")
+
+# Tablas
+
+table_iris_sp <- data.frame(
+  Especies = c("versicolor", "virginica"),
+  Media = c(4.260, 5.552),
+  Varianza = c(0.2208163, 0.3045878),
+  Desv.Estandar = c(0.4699110, 0.5518947)
+)
+table_iris_sp %>%
+  gt() %>%
+  gt_theme_pff()
+
+mean_iris_sp <- data.frame(                 # Media de ambas especies
+  Especies = c("versicolor", "virginica"),
+  Media = c(4.260, 5.552)
+)
+mean_iris_sp %>%
+  gt() %>%
+  gt_theme_pff()
+
+var_iris_sp <- data.frame(                 # Varianza de ambas especies
+  Especies = c("versicolor", "virginica"),
+  Varianza = c(0.2208163, 0.3045878)
+)
+var_iris_sp %>%
+  gt() %>%
+  gt_theme_pff()
+
+sd_iris_sp <- data.frame(                  # Desv.Est de ambas especies
+  Especies = c("versicolor", "virginica"),
+  Desv.Estandar = c(0.4699110, 0.5518947)
+)
+sd_iris_sp %>%
+  gt() %>%
+  gt_theme_pff()
+
