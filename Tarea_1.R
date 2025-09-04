@@ -125,10 +125,11 @@ iris_sp %>%
   left_join(sample_size) %>%
   mutate(myaxis = paste0(species, "", "")) %>%
   ggplot( aes(x=myaxis, y= petal_length, fill=species))+
+  ylab("Longitud del petalo")+
   geom_violin(width=1.4)+
   geom_boxplot(width=0.1, color="grey", alpha=0.2)+
   scale_fill_viridis(discrete = T)+
-  theme_ipsum()+
+  theme_minimal()+
   theme(
     legend.position = "none",
     plot.title = element_text(size=11)
