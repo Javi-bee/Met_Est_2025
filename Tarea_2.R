@@ -97,7 +97,7 @@ t.test(df_setosa$petal_length, df_versicolor$petal_length,
        alternative = "less",
        var.equal = F)
 # p-value < 2.2e-16, menor a 0.05, por lo que se rechaza H0, hay una gran diferencia
-# en tamaño de petalos
+# en tamaño de petalos comparando setosa y versicolor
 ##########################################################################
 ##########################################################################
 
