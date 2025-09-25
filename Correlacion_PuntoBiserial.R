@@ -26,9 +26,24 @@ estudio <- data.frame(
   Horas_estudio,
   Resultado
 )
-
 estudio
 
+# Convertir puntuacion de examen en numeros asignando valores de 1 (apr) y 0(susp)
 estudio$Rsultado_bin <- ifelse(estudio$Resultado == "Aprobado", 1, 0)
-
 head(estudio)
+
+cor.test(estudio$Horas_estudio, estudio$Rsultado_bin,
+         method = "pearson")
+
+# Media de horas de estudio de los aprobados
+mean_aprobados <- mean(estudio$Horas_estudio[estudio$Resultado == "Aprobado"])
+mean_aprobados
+
+# Media de horas de estudio de los reprobados
+mean_reprobados <- mean(estudio$Horas_estudio[estudio$Resultado == "Reprobado"])
+mean_reprobados
+
+sd(estudio$Horas_estudio)
+
+N <- length(estudio$Estudiante)
+n
