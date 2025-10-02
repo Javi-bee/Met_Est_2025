@@ -1,4 +1,4 @@
-# 31/08/2025
+# 04/09/2025
 # JEGR
 # Base de datos Iris
 
@@ -45,54 +45,61 @@ legend("right",
 
 # Estadistica descriptiva -------------------------------------------------
 
-data_sub <- subset(iris_df, species %in% c("versicolor", "virginica"))
+data_sub <- subset(iris_df, species %in% c("setosa", "versicolor"))
 iris_sp <- data.frame(species = data_sub$species,
                       petal_length = data_sub$petal_length) # Dataframe con solo
-                      # species (en orden, versicolor y virginica) y petal_length
+# species (en orden, setosa y versicolor) y petal_length
 View(iris_sp)
 head(iris_sp)
 summary(iris_sp)
 
 # Media, desv.est y varianza
 
-tapply(iris_sp$petal_length, iris_sp$species, mean)
-tapply(iris_sp$petal_length, iris_sp$species, sd)
-tapply(iris_sp$petal_length, iris_sp$species, var)
+tapply(iris_sp$petal_length, iris_sp$species, mean) # Media de vers. 3 veces mayor
+tapply(iris_sp$petal_length, iris_sp$species, sd)   # Var. de vers. 3 veces mayor
+tapply(iris_sp$petal_length, iris_sp$species, var)  # Sd. de vers. mucho mayor
 
 # Grafica de densidad
 ggplot(iris_sp, aes(x = petal_length, color = species,))+
-         geom_density()
+  geom_density()
 
-df_versicolor <- subset(iris_sp, species  == "versicolor")
-df_virginica <- subset(iris_sp, species != "versicolor")
+df_setosa <- subset(iris_sp, species  == "setosa")
+df_versicolor <- subset(iris_sp, species != "setosa")
 
 # Hipotesis ---------------------------------------------------------------
 
-# ¿Existe una diferencia significante entre el largo del petalo de ambas especies?
-# H0 = no hay diferencia
-# H1 = si hay diferencia
+# ¿En comparacion?
+# H0 = no hay una diferencia significativa entre las medias de ambas especies
+# H1 = hay una gran diferencia entre las medias de setosa con respecto a versicolor
 
 
 # Grafico de normalidad para ambas especies
+qqnorm(df_setosa$petal_length); qqline(df_setosa$petal_length)
 qqnorm(df_versicolor$petal_length); qqline(df_versicolor$petal_length)
-qqnorm(df_virginica$petal_length); qqline(df_virginica$petal_length)
-# Ambos tienen datos normales
+# Setosa muestra datos una distribucion no normal, al contrario de versicolor,
+# que cuenta con una distribucion normal en su grafica
 
 # Prueba de normalidad
+shapiro.test(df_setosa$petal_length)
 shapiro.test(df_versicolor$petal_length)
-shapiro.test(df_virginica$petal_length)
-# Mayor a 0.05 (p-value = 0.1585), por lo que existe normalidad en variables
+# df_setosa presenta datos no normales (p-value = 0.05481), mientras que df_versicolor
+# si presenta datos normales (p-value = 0.1585)
 
 # Homogeneidad de varianzas
-var.test(df_versicolor$petal_length, df_virginica$petal_length)
-# p-value = 0.2637, varianzas relativamente similares, se puede utilizar prueba de t
+var.test(df_setosa$petal_length, df_versicolor$petal_length)
+# IC(95%) = [0.07750613, 0.24068043], p -value =  1.026e-10, varianzas muy diferentes
+# en ambos grupos con un p-value significativo >.005.
 
-# Prueba de t
-t.test(df_versicolor$petal_length, df_virginica$petal_length,
-       alternative = "two.sided",
-       var.equal = T)
+##########################################################################
+##########################################################################
+# Prueba de t ()
+t.test(df_setosa$petal_length, df_versicolor$petal_length,
+       alternative = "less",
+       var.equal = F)
 # p-value < 2.2e-16, menor a 0.05, por lo que se rechaza H0, hay una gran diferencia
-# en tamaño de petalos
+# en tamaño de petalos comparando setosa y versicolor
+##########################################################################
+##########################################################################
 
 # Prueba de cohen´s d
 cohens_efecto <- function(x,y) {
@@ -102,14 +109,15 @@ cohens_efecto <- function(x,y) {
   (mean(x) - mean(y)) / sp
 }
 
-d_cal <- (cohens_efecto(df_versicolor$petal_length, df_virginica$petal_length))
+d_cal <- (cohens_efecto(df_setosa$petal_length, df_versicolor$petal_length))
 d_cal
 # Valor que representa la diferencia entre las medias de ambas variables 
 # Mientras mas grande, mayor diferencia habra entre sus medias y datos
+# Valor muy significativo, cohen´s D = -7.898544
 
 # Grafico boxplot simple de ambas especies
-boxplot(df_versicolor$petal_length, df_virginica$petal_length,
-        names = c("Versicolor","Virginica"),
+boxplot(df_setosa$petal_length, df_versicolor$petal_length,
+        names = c("setosa","versicolor"),
         col = color,
         main = "Distribucion del largo del petalo por especie",
         xlab = "Especie",
@@ -141,36 +149,35 @@ iris_sp %>%
 # Tablas
 
 table_iris_sp <- data.frame(
-  Especies = c("versicolor", "virginica"),
-  Media = c(4.260, 5.552),
-  Varianza = c(0.2208163, 0.3045878),
-  Desv.Estandar = c(0.4699110, 0.5518947)
+  Especies = c("setosa", "versicolor"),
+  Media = c(1.462, 4.260),
+  Varianza = c(0.03015918, 0.22081633),
+  Desv.Estandar = c(0.173664, 0.469911)
 )
 table_iris_sp %>%
   gt() %>%
   gt_theme_pff()
 
 mean_iris_sp <- data.frame(                 # Media de ambas especies
-  Especies = c("versicolor", "virginica"),
-  Media = c(4.260, 5.552)
+  Especies = c("setosa", "versicolor"),
+  Media = c(1.462, 4.260)
 )
 mean_iris_sp %>%
   gt() %>%
   gt_theme_pff()
 
 var_iris_sp <- data.frame(                 # Varianza de ambas especies
-  Especies = c("versicolor", "virginica"),
-  Varianza = c(0.2208163, 0.3045878)
+  Especies = c("setosa", "versicolor"),
+  Varianza = c(0.03015918, 0.22081633)
 )
 var_iris_sp %>%
   gt() %>%
   gt_theme_pff()
 
 sd_iris_sp <- data.frame(                  # Desv.Est de ambas especies
-  Especies = c("versicolor", "virginica"),
-  Desv.Estandar = c(0.4699110, 0.5518947)
+  Especies = c("setosa", "versicolor"),
+  Desv.Estandar = c(0.173664, 0.469911)
 )
 sd_iris_sp %>%
   gt() %>%
   gt_theme_pff()
-
