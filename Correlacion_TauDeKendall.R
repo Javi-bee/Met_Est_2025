@@ -1,4 +1,4 @@
-# Ejercicio correlacion de spearman
+# Ejercicio correlacion de kendall
 # JEGR
 # 25/09/2025
 
