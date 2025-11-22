@@ -1,176 +1,72 @@
-# 31/08/2025
+# Laboratorio 1
+# Práctica: gastos de estudiante universitaria
 # JEGR
-# Base de datos Iris
+# 13/08/2025
 
-library("ggplot2")
-library("dplyr")
-library("hrbrthemes")
-library("viridis")
-library("gt")
-library("gtExtras")
+## Gastos totales por mes
+300 + 240 + 1527 + 400 + 1500 + 1833
+Celular <- 300
+Celular
+Transporte <- 240
+Comestibles <- 1527
+Gimnasio <- 400
+Alquiler <- 1500
+Otros <- 1833
+Total <- Celular + Transporte + Comestibles + Alquiler + Gimnasio + Otros
+Semestre <- Total*5
+Aual <- Total*10
 
-# Base de datos
-data("iris")
-View(iris)
+#**Funciones de R**
 
-# Renombrar base de datos, para hacerlo mas facil de seguir
-iris_df <- rename(iris,
-                  petal_length = Petal.Length,
-                  petal_width = Petal.Width,
-                  sepal_length = Sepal.Length,
-                  sepal_width = Sepal.Width,
-                  species = Species)
+#**Valor absoluto**
+abs(10)
+abs(-4)
 
-# Datos estadisticos descriptivos simples
-summary(iris_df)
-head(iris_df)
+#**Raíz cuadrada**
+sqrt(9)
 
-# Grafico boxplot simple
-color <- c("cornflowerblue", "tomato", "navajowhite")
+#**Logaritmo natural**
+log(2)
 
-par(mar = c(5, 5, 4, 6)) # Cambiar margenes de la grafica
+# Comentarios normales
 
-boxplot(iris_df$petal_length ~ iris_df$species,
-        col = color,
-        main = "Distribucion del largo del petalo por especie",
-        xlab = "Especie",
-        ylab = "Largo del petalo (cm)")
-legend("right",
-       legend = c("setosa", "versicolor", "virginica"),
-       inset = c(-0.57, 0),
-       fill = color,
-       col = color,
-       xpd = T)
+2*9
+4+5 #Tambien se puede colocar un comentario aqui
 
+celular <- 300
+Celular <- 300
+CELULAR <- 300
 
-# Estadistica descriptiva -------------------------------------------------
+## Buscar ayuda dentro de R
 
-data_sub <- subset(iris_df, species %in% c("versicolor", "virginica"))
-iris_sp <- data.frame(species = data_sub$species,
-                      petal_length = data_sub$petal_length) # Dataframe con solo
-                      # species (en orden, versicolor y virginica) y petal_length
-View(iris_sp)
-head(iris_sp)
-summary(iris_sp)
+help(abs)
+help(mean)
+?abs
+help.search("absolute")
 
-# Media, desv.est y varianza
+#**Ejercicio de autoevaluación**
 
-tapply(iris_sp$petal_length, iris_sp$species, mean)
-tapply(iris_sp$petal_length, iris_sp$species, sd)
-tapply(iris_sp$petal_length, iris_sp$species, var)
+# Agrupar todos los datos de los gastos
+gastos <- c(Celular, Transporte, Comestibles,
+            Gimnasio, Otros, Alquiler)
+gastos
 
-# Grafica de densidad
-ggplot(iris_sp, aes(x = petal_length, color = species,))+
-         geom_density()
+# Grafico de barras
+barplot(gastos, col = "tomato")
 
-df_versicolor <- subset(iris_sp, species  == "versicolor")
-df_virginica <- subset(iris_sp, species != "versicolor")
+help(sort)
+gastos_ord <- sort(gastos, decreasing = TRUE)
+gastos_ord
 
-# Hipotesis ---------------------------------------------------------------
+# Graficos de los gastos mensuales 
 
-# ¿Existe una diferencia significante entre el largo del petalo de ambas especies?
-# H0 = no hay diferencia
-# H1 = si hay diferencia
+# Sin nombres en el eje x
+barplot(gastos_ord, col = "navajowhite")
 
-
-# Grafico de normalidad para ambas especies
-qqnorm(df_versicolor$petal_length); qqline(df_versicolor$petal_length)
-qqnorm(df_virginica$petal_length); qqline(df_virginica$petal_length)
-# Ambos tienen datos normales
-
-# Prueba de normalidad
-shapiro.test(df_versicolor$petal_length)
-shapiro.test(df_virginica$petal_length)
-# Mayor a 0.05 (p-value = 0.1585), por lo que existe normalidad en variables
-
-# Homogeneidad de varianzas
-var.test(df_versicolor$petal_length, df_virginica$petal_length)
-# p-value = 0.2637, varianzas relativamente similares, se puede utilizar prueba de t
-
-# Prueba de t
-t.test(df_versicolor$petal_length, df_virginica$petal_length,
-       alternative = "two.sided",
-       var.equal = T)
-# p-value < 2.2e-16, menor a 0.05, por lo que se rechaza H0, hay una gran diferencia
-# en tamaño de petalos
-
-# Prueba de cohen´s d
-cohens_efecto <- function(x,y) {
-  n1 <- length(x); n2 <- length(y)
-  s1 <- sd(x); s2 <- sd(y)
-  sp <- sqrt(((n1-1) * s1^2 + (n2 - 1) * s2^2) / (n1 + n2 -2))
-  (mean(x) - mean(y)) / sp
-}
-
-d_cal <- (cohens_efecto(df_versicolor$petal_length, df_virginica$petal_length))
-d_cal
-# Valor que representa la diferencia entre las medias de ambas variables 
-# Mientras mas grande, mayor diferencia habra entre sus medias y datos
-
-# Grafico boxplot simple de ambas especies
-boxplot(df_versicolor$petal_length, df_virginica$petal_length,
-        names = c("Versicolor","Virginica"),
-        col = color,
-        main = "Distribucion del largo del petalo por especie",
-        xlab = "Especie",
-        ylab = "Largo del petalo (cm)")
-
-# Grafico de violin
-ggplot(iris_sp, aes(x = species, y = petal_length))+
-  geom_violin()
-
-sample_size = iris_sp %>%group_by(species) %>%summarize(num=n())
-
-iris_sp %>%
-  left_join(sample_size) %>%
-  mutate(myaxis = paste0(species, "", "")) %>%
-  ggplot( aes(x=myaxis, y= petal_length, fill=species))+
-  ylab("Longitud del petalo")+
-  geom_violin(width=1.4)+
-  geom_boxplot(width=0.1, color="grey", alpha=0.2)+
-  scale_fill_viridis(discrete= T)+
-  scale_fill_viridis(discrete = T)+
-  theme_minimal()+
-  theme(
-    legend.position = "none",
-    plot.title = element_text(size=11)
-  )+
-  ggtitle("Grafico de violin sobre boxplot")+
-  xlab("")
-
-# Tablas
-
-table_iris_sp <- data.frame(
-  Especies = c("versicolor", "virginica"),
-  Media = c(4.260, 5.552),
-  Varianza = c(0.2208163, 0.3045878),
-  Desv.Estandar = c(0.4699110, 0.5518947)
-)
-table_iris_sp %>%
-  gt() %>%
-  gt_theme_pff()
-
-mean_iris_sp <- data.frame(                 # Media de ambas especies
-  Especies = c("versicolor", "virginica"),
-  Media = c(4.260, 5.552)
-)
-mean_iris_sp %>%
-  gt() %>%
-  gt_theme_pff()
-
-var_iris_sp <- data.frame(                 # Varianza de ambas especies
-  Especies = c("versicolor", "virginica"),
-  Varianza = c(0.2208163, 0.3045878)
-)
-var_iris_sp %>%
-  gt() %>%
-  gt_theme_pff()
-
-sd_iris_sp <- data.frame(                  # Desv.Est de ambas especies
-  Especies = c("versicolor", "virginica"),
-  Desv.Estandar = c(0.4699110, 0.5518947)
-)
-sd_iris_sp %>%
-  gt() %>%
-  gt_theme_pff()
+#Nombres en el eje x
+barplot(gastos_ord, main = "Gastos mensuales",
+        col = "cornflowerblue",
+        names.arg = c("Otros", "Comestibles",
+                      "Alquiler", "Gimnasio",
+                      "Celular", "Transporte"))
 
